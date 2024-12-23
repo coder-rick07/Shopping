@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Shopping Store</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        nav {
+            background: #333;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .cart-icon {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        main {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .product-title {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .product-price {
+            color: #e44d26;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .add-to-cart {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background: #555;
+        }
+
+        #cart-count {
+            background: #e44d26;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: relative;
+            top: -10px;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">ShopStyle</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="cart-icon">
+            🛒 <span id="cart-count">0</span>
+        </div>
+    </nav>
+
+    <main>
+        <div class="products-grid" id="products">
+            <!-- Products will be dynamically added here -->
+        </div>
+    </main>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Premium Headphones",
+                price: 199.99,
+                image: "https://via.placeholder.com/200x200?text=Headphones"
+            },
+            {
+                id: 2,
+                name: "Smart Watch",
+                price: 299.99,
+                image: "https://via.placeholder.com/200x200?text=SmartWatch"
+            },
+            {
+                id: 3,
+                name: "Wireless Speaker",
+                price: 149.99,
+                image: "https://via.placeholder.com/200x200?text=Speaker"
+            },
+            {
+                id: 4,
+                name: "Laptop Pro",
+                price: 1299.99,
+                image: "https://via.placeholder.com/200x200?text=Laptop"
+            },
+            {
+                id: 5,
+                name: "Gaming Mouse",
+                price: 79.99,
+                image: "https://via.placeholder.com/200x200?text=Mouse"
+            },
+            {
+                id: 6,
+                name: "4K Monitor",
+                price: 499.99,
+                image: "https://via.placeholder.com/200x200?text=Monitor"
+            }
+        ];
+
+        let cartCount = 0;
+
+        function displayProducts() {
+            const productsGrid = document.getElementById('products');
+            productsGrid.innerHTML = '';
+
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-price">$${product.price}</p>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+
+        function addToCart(productId) {
+            cartCount++;
+            document.getElementById('cart-count').textContent = cartCount;
+            
+            // Add animation effect
+            const button = event.target;
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 100);
+        }
+
+        // Initialize the page
+        displayProducts();
+    </script>
+</body>
+</html>
